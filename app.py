@@ -8,7 +8,7 @@ def index():
     return render_template('main.html')
 
 # ✅ 여기 추가
-@app.route('/자소서분석.html')
+@app.route('/resume')
 def resume_page():
     return render_template('자소서분석.html')
 
