@@ -10,7 +10,7 @@ def index():
 # ✅ 여기 추가
 @app.route('/resume')
 def resume_page():
-    return render_template('자소서분석.html')
+    return render_template('resume.html')
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
