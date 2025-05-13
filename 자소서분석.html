@@ -21,7 +21,7 @@
       <label class="block mb-2 font-medium">직접 입력</label>
       <textarea id="essayInput" rows="10" class="w-full p-4 border rounded mb-6 resize-none focus:outline-[#4a90e2]" placeholder="자소서를 붙여넣거나 입력하세요..."></textarea>
 
-      <!-- 파일 업로드 -->
+      <!-- 파일 업로드 (아직 동작은 안 함, 추후 구현 가능) -->
       <label class="block mb-2 font-medium">또는 파일 업로드 (txt, docx)</label>
       <input type="file" accept=".txt,.docx" class="mb-6 border rounded px-4 py-2">
 
@@ -33,7 +33,9 @@
       <!-- 결과 출력 -->
       <div id="result" class="mt-8 hidden">
         <h3 class="text-lg font-semibold mb-2 text-green-600">분석 결과</h3>
-        <p class="bg-gray-100 p-4 rounded border">여기에 분석 결과가 표시됩니다...</p>
+        <p id="wordCount"></p>
+        <p id="sentenceCount"></p>
+        <ul id="feedbackList" class="list-disc pl-5 mt-2 text-sm text-gray-700"></ul>
       </div>
     </section>
   </main>
@@ -43,15 +45,39 @@
     © 2025 구직도움 웹사이트 - AI가 도와주는 자소서 분석기
   </footer>
 
-  <!-- 간단한 JS -->
+  <!-- JS: Flask로 POST 요청 -->
   <script>
     function analyzeEssay() {
-      const resultDiv = document.getElementById('result');
-      resultDiv.classList.remove('hidden');
-      resultDiv.querySelector('p').textContent = '📊 분석 중... (여기에 향후 AI 분석 결과가 표시될 예정입니다.)';
+      const text = document.getElementById('essayInput').value;
+
+      fetch('/analyze', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({ resume: text }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        // 결과 표시
+        document.getElementById('wordCount').textContent = `총 단어 수: ${data.word_count}`;
+        document.getElementById('sentenceCount').textContent = `총 문장 수: ${data.sentence_count}`;
+
+        const feedbackList = document.getElementById('feedbackList');
+        feedbackList.innerHTML = '';
+        data.feedback.forEach(msg => {
+          const li = document.createElement('li');
+          li.textContent = msg;
+          feedbackList.appendChild(li);
+        });
+
+        document.getElementById('result').classList.remove('hidden');
+      })
+      .catch(error => {
+        alert('분석 중 오류가 발생했습니다.');
+        console.error(error);
+      });
     }
   </script>
 </body>
 </html>
-
-
