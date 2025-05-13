@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>자소서 분석</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+  <!-- 상단 헤더 -->
+  <header class="text-white text-center py-6 shadow" style="background-color: #4a90e2;">
+    <h1 class="text-2xl font-bold">📄 자기소개서 분석</h1>
+  </header>
+
+  <!-- 메인 콘텐츠 -->
+  <main class="max-w-4xl mx-auto px-6 py-10">
+    <section class="bg-white p-8 rounded-lg shadow">
+      <h2 class="text-xl font-semibold mb-4" style="color: #4a90e2;">📌 자기소개서를 입력하거나 업로드하세요</h2>
+
+      <!-- 텍스트 입력 -->
+      <label class="block mb-2 font-medium">직접 입력</label>
+      <textarea id="essayInput" rows="10" class="w-full p-4 border rounded mb-6 resize-none focus:outline-[#4a90e2]" placeholder="자소서를 붙여넣거나 입력하세요..."></textarea>
+
+      <!-- 파일 업로드 -->
+      <label class="block mb-2 font-medium">또는 파일 업로드 (txt, docx)</label>
+      <input type="file" accept=".txt,.docx" class="mb-6 border rounded px-4 py-2">
+
+      <!-- 분석 버튼 -->
+      <button class="text-white font-semibold px-6 py-2 rounded" style="background-color: #4a90e2;" onmouseover="this.style.backgroundColor='#357ab8'" onmouseout="this.style.backgroundColor='#4a90e2'" onclick="analyzeEssay()">
+        ✨ 분석 시작하기
+      </button>
+
+      <!-- 결과 출력 -->
+      <div id="result" class="mt-8 hidden">
+        <h3 class="text-lg font-semibold mb-2 text-green-600">분석 결과</h3>
+        <p class="bg-gray-100 p-4 rounded border">여기에 분석 결과가 표시됩니다...</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- 푸터 -->
+  <footer class="text-center bg-gray-200 text-sm py-6 mt-12">
+    © 2025 구직도움 웹사이트 - AI가 도와주는 자소서 분석기
+  </footer>
+
+  <!-- 간단한 JS -->
+  <script>
+    function analyzeEssay() {
+      const resultDiv = document.getElementById('result');
+      resultDiv.classList.remove('hidden');
+      resultDiv.querySelector('p').textContent = '📊 분석 중... (여기에 향후 AI 분석 결과가 표시될 예정입니다.)';
+    }
+  </script>
+</body>
+</html>
+
+

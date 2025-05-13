@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>모의면접</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800">
+
+  <!-- 헤더 -->
+  <header class="text-white text-center py-6 shadow" style="background-color: #4a90e2;">
+    <h1 class="text-2xl font-bold">🎤 모의면접 시작하기</h1>
+  </header>
+
+  <!-- 면접관 이미지 -->
+<section class="text-center mt-10">
+  <h2 class="text-xl font-semibold mb-6" style="color: #4a90e2;">👥 면접관이 기다리고 있어요</h2>
+  <div class="flex justify-center gap-8">
+    <img src="interviewer3.jpg" alt="면접관1" class="w-80 h-80 rounded-lg shadow" />
+    <img src="interviewer4.jpg" alt="면접관2" class="w-80 h-80 rounded-lg shadow" />
+  </div>
+</section>
+
+<!-- 영상 영역 -->
+<section class="mt-12 text-center">
+  <h2 class="text-lg font-semibold mb-4" style="color: #4a90e2;">🎥 카메라 미리보기</h2>
+  <video id="preview" autoplay muted playsinline class="mx-auto border rounded shadow" style="width: 640px; height: 480px; background: black;"></video>
+
+  <div class="mt-6">
+    <button id="startBtn" class="px-6 py-2 font-semibold text-white rounded" style="background-color: #4a90e2;" onmouseover="this.style.backgroundColor='#357ab8'" onmouseout="this.style.backgroundColor='#4a90e2'">
+      ⏺ 녹화 시작
+    </button>
+  </div>
+
+  <div id="recordedContainer" class="mt-8 hidden">
+    <h3 class="text-lg font-medium mb-2" style="color: #4a90e2;">📼 녹화된 영상</h3>
+    <video id="recorded" controls class="mx-auto border rounded shadow" style="width: 640px; height: 480px;"></video>
+  </div>
+</section>
+
+
+  <!-- 푸터 -->
+  <footer class="text-center bg-gray-200 text-sm py-6 mt-12">
+    © 2025 구직도움 웹사이트 - AI 면접 연습기
+  </footer>
+
+  <!-- JS: 카메라 + 녹화 -->
+  <script>
+    const preview = document.getElementById('preview');
+    const recorded = document.getElementById('recorded');
+    const recordedContainer = document.getElementById('recordedContainer');
+    const startBtn = document.getElementById('startBtn');
+
+    let mediaRecorder;
+    let recordedChunks = [];
+
+    async function initCamera() {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+      preview.srcObject = stream;
+
+      mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.ondataavailable = (e) => {
+        if (e.data.size > 0) recordedChunks.push(e.data);
+      };
+
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(recordedChunks, { type: 'video/webm' });
+        recorded.src = URL.createObjectURL(blob);
+        recordedContainer.classList.remove('hidden');
+        recordedChunks = [];
+      };
+    }
+
+    startBtn.addEventListener('click', () => {
+      if (mediaRecorder.state === 'inactive') {
+        mediaRecorder.start();
+        startBtn.textContent = '⏹ 녹화 종료';
+        startBtn.style.backgroundColor = '#e74c3c';
+      } else {
+        mediaRecorder.stop();
+        startBtn.textContent = '⏺ 녹화 시작';
+        startBtn.style.backgroundColor = '#4a90e2';
+      }
+    });
+
+    initCamera();
+  </script>
+</body>
+</html>

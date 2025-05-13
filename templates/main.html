@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>구직도움 웹사이트</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f7f9;
+      color: #333;
+    }
+
+    header {
+      background-color: #4a90e2;
+      padding: 30px;
+      text-align: center;
+      color: white;
+      font-size: 28px;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    nav {
+      background-color: white;
+      display: flex;
+      justify-content: center;
+      padding: 15px 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      margin: 0 20px;
+      padding: 10px 15px;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+
+    nav a:hover {
+      background-color: #e1ecf4;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      background: #eaf2fb;
+    }
+
+    .hero h1 {
+      font-size: 40px;
+      color: #2b6cb0;
+    }
+
+    .hero p {
+      font-size: 20px;
+      margin-top: 10px;
+    }
+
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 40px 20px;
+      gap: 20px;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 10px;
+      width: 250px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.2s;
+      text-decoration: none; /* 링크 밑줄 제거 */
+      color: inherit; /* 링크 색 유지 */
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      background-color: #f0f8ff;
+    }
+
+    .card h3 {
+      color: #4a90e2;
+    }
+
+    .card p {
+      font-size: 15px;
+      margin-top: 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #dce6f3;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    구직을 위한 통합 플랫폼
+  </header>
+
+  <nav>
+    <a href="자소서분석.html">📄 자소서 분석</a>
+    <a href="모의면접.html">🎤 모의면접</a>
+    <a href="구직AI챗봇.html">🤖 AI 챗봇</a>
+    <a href="기사모음집.html">📰 기사 모음집</a>
+    <a href="커뮤니티.html">💬 커뮤니티</a>
+  </nav>
+
+  <section class="hero">
+    <h1>AI와 함께하는 취업 준비</h1>
+    <p>자소서 분석부터 면접 준비까지, 한 번에 해결하세요!</p> 자소서, 면접, 뉴스, 커뮤니티까지 한 곳에서!
+  </section>
+
+  <section class="features">
+    <a href="자소서분석.html" class="card">
+      <h3>📄 자소서 분석</h3>
+      <p>AI가 문장을 분석하고 개선 팁을 제시해줍니다.</p>
+    </a>
+
+    <a href="모의면접.html" class="card">
+      <h3>🎤 모의면접</h3>
+      <p>카메라와 마이크를 활용한 실전 대비 연습 기능 제공</p>
+    </a>
+
+    <a href="구직AI챗봇.html" class="card">
+      <h3>🤖 구직 AI 챗봇</h3>
+      <p>GPT 기반 챗봇과 자유롭게 질문/상담 가능</p>
+    </a>
+
+    <a href="기사모음집.html" class="card">
+      <h3>📰 기사 모음집</h3>
+      <p>채용 관련 뉴스/정보를 한곳에 모았습니다.</p>
+    </a>
+
+    <a href="커뮤니티.html" class="card">
+      <h3>💬 커뮤니티</h3>
+      <p>다른 구직자들과 정보를 나누는 공간입니다.</p>
+    </a>
+  </section>
+
+  <footer>
+    © 2025 구직도움 웹사이트 - 모두의 취업을 응원합니다!
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>구직자 커뮤니티</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800">
+
+  <!-- 헤더 -->
+  <header class="text-white text-center py-6 shadow" style="background-color: #4a90e2;">
+    <h1 class="text-2xl font-bold">💬 구직자 커뮤니티</h1>
+    <p class="text-sm mt-1 text-white">취업 고민, 팁, 질문을 자유롭게 나누세요!</p>
+  </header>
+
+  <!-- 검색 -->
+  <section class="max-w-3xl mx-auto px-6 mt-6">
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="내용 검색..."
+      class="w-full border px-4 py-2 rounded focus:outline-[#4a90e2]"
+    />
+  </section>
+
+  <!-- 글쓰기 폼 -->
+  <section class="max-w-3xl mx-auto px-6 py-6 bg-white shadow mt-6 rounded">
+    <h2 class="text-lg font-semibold mb-4 text-[#4a90e2]">📝 글 작성</h2>
+    <form id="postForm" class="space-y-4">
+      <textarea id="content" rows="4" placeholder="내용을 입력하세요..." required class="w-full border px-4 py-2 rounded resize-none"></textarea>
+      <button type="submit" class="bg-[#4a90e2] hover:bg-[#357ab8] text-white font-semibold px-6 py-2 rounded">
+        등록하기
+      </button>
+    </form>
+  </section>
+
+  <!-- 게시글 리스트 -->
+  <section class="max-w-3xl mx-auto px-6 py-6">
+    <h2 class="text-lg font-semibold mb-4 text-[#4a90e2]">📋 게시글</h2>
+    <div id="postList" class="space-y-4">
+      <!-- 게시글이 여기에 추가됨 -->
+    </div>
+  </section>
+
+  <!-- 푸터 -->
+  <footer class="text-center bg-gray-200 text-sm py-6 mt-10">
+    © 2025 구직도움 웹사이트 - 함께하는 커뮤니티
+  </footer>
+
+  <!-- JS 기능 -->
+  <script>
+    const postForm = document.getElementById("postForm");
+    const postList = document.getElementById("postList");
+    const searchInput = document.getElementById("searchInput");
+
+    postForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const nickname = "익명"; // 고정
+      const content = document.getElementById("content").value.trim();
+      const date = new Date().toLocaleString("ko-KR");
+
+      if (content) {
+        const postDiv = document.createElement("div");
+        postDiv.className = "bg-white p-4 rounded shadow post";
+        postDiv.setAttribute("data-nickname", nickname.toLowerCase());
+        postDiv.setAttribute("data-content", content.toLowerCase());
+
+        postDiv.innerHTML = `
+          <div class="text-sm text-gray-500 mb-1">${nickname} • ${date}</div>
+          <div class="text-gray-800 whitespace-pre-line mb-2">${content}</div>
+          <div class="flex items-center gap-4 text-sm mb-2">
+            <button class="likeBtn text-[#4a90e2]">❤️ 좋아요 <span class="likeCount">0</span></button>
+            <button class="deleteBtn text-red-500 hover:underline">삭제</button>
+          </div>
+
+          <!-- 댓글 입력 -->
+          <div class="mt-3">
+            <form class="commentForm flex gap-2 items-center">
+              <input type="text" value="익명" readonly class="border px-2 py-1 text-sm w-1/4 rounded bg-gray-100 text-gray-600" />
+              <input type="text" placeholder="댓글을 입력하세요..." class="commentInput border rounded px-2 py-1 text-sm w-full" required />
+              <button type="submit" class="text-sm bg-[#4a90e2] text-white px-3 py-1 rounded">등록</button>
+            </form>
+            <div class="commentList mt-2 space-y-1 text-sm"></div>
+          </div>
+        `;
+
+        postList.prepend(postDiv);
+        postForm.reset();
+        filterPosts(); // 필터 적용
+      }
+    });
+
+    // 좋아요 기능
+    postList.addEventListener("click", (e) => {
+      if (e.target.classList.contains("likeBtn")) {
+        const countEl = e.target.querySelector(".likeCount");
+        countEl.textContent = parseInt(countEl.textContent) + 1;
+      }
+
+      // 댓글 삭제
+      if (e.target.classList.contains("deleteComment")) {
+        e.target.parentElement.remove();
+      }
+
+      // 게시글 삭제
+      if (e.target.classList.contains("deleteBtn")) {
+        if (confirm("이 글을 삭제할까요?")) {
+          e.target.closest(".post").remove();
+        }
+      }
+    });
+
+    // 댓글 등록
+    postList.addEventListener("submit", (e) => {
+      if (e.target.classList.contains("commentForm")) {
+        e.preventDefault();
+
+        const form = e.target;
+        const nickname = "익명";
+        const comment = form.querySelector(".commentInput").value.trim();
+        const commentList = form.nextElementSibling;
+
+        if (comment) {
+          const commentEl = document.createElement("div");
+          commentEl.className = "flex justify-between items-center bg-gray-100 rounded px-3 py-1";
+          commentEl.innerHTML = `
+            <span><strong>${nickname}</strong>: ${comment}</span>
+            <button class="text-red-500 text-xs deleteComment">삭제</button>
+          `;
+          commentList.appendChild(commentEl);
+          form.reset();
+        }
+      }
+    });
+
+    // 검색 필터링
+    searchInput.addEventListener("input", filterPosts);
+
+    function filterPosts() {
+      const keyword = searchInput.value.toLowerCase();
+      const posts = document.querySelectorAll(".post");
+
+      posts.forEach(post => {
+        const nick = post.dataset.nickname;
+        const content = post.dataset.content;
+        post.style.display = (nick.includes(keyword) || content.includes(keyword)) ? "block" : "none";
+      });
+    }
+  </script>
+
+</body>
+</html>
+
