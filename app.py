@@ -1,5 +1,3 @@
-# app.py
-
 from flask import Flask, render_template, request, jsonify
 from analyzer import analyze_resume
 
@@ -8,6 +6,11 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return render_template('main.html')
+
+# ✅ 여기 추가
+@app.route('/자소서분석.html')
+def resume_page():
+    return render_template('자소서분석.html')
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
